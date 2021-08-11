@@ -18,6 +18,10 @@ export default new VueRouter({
             path: '/view/:id',
             component:()=>import('./pages/View.vue')
         },
+        {
+            path: '/edit/:id',
+            component:()=>import('./pages/Edit.vue')
+        },
     ],
     mode: 'history' 
 })

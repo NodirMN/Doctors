@@ -1,34 +1,14 @@
 {
   "doctors": [
     {
-      "name": "ewqe",
-      "spec": "Terapeft",
-      "data": "3213-02-21",
-      "place": "231321",
-      "time": "21:12",
-      "room": "22",
-      "id": 1
-    },
-    {
       "id": 2
     },
     {
-      "name": "nodi marasuov",
-      "data": "2222-02-05",
-      "place": "toshkent",
+      "name": "dfasfa",
       "spec": "Nevrolog",
-      "time": "22:22",
-      "room": "22",
-      "id": 3
-    },
-    {
-      "name": "nofddifw",
-      "data": "1212-02-21",
-      "place": "21212",
-      "spec": "Xirurg",
-      "time": "21:12",
-      "room": "221",
       "id": 4
     }
-  ]
+  ],
+  "spec": [],
+  "patient": []
 }

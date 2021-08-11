@@ -1,6 +1,6 @@
 <template>
-<div>
-    <h1>New Doctor</h1>
+    <div>
+            <h1>New Doctor</h1>
     <div  class="info__box" v-show='active'>Ma'lumot qo'shildi</div>
     <div class="row">
         <div class="col-4">
@@ -30,7 +30,6 @@
         <div class="col-4">
             <label >Xona raqami</label>
             <input type="number" v-model='doctor.room'>
-            <div class="msg error" v-show="roomMsg">This room is occupied</div>
         </div>
         <div class="col-4">
             <label>Rasm url</label>
@@ -40,8 +39,8 @@
             <vue-editor v-model='doctor.text'> </vue-editor>
         </div>
         </div>
-        <button class="add" @click='add()'>Add</button>
-</div>
+        <button class="add" @click='add()'>Change</button>
+    </div>
 </template>
 
 <script>
@@ -49,41 +48,35 @@ import { VueEditor } from "vue2-editor";
 import axios from 'axios'
 export default {
     components: {
-    VueEditor
+        VueEditor
     },
-    data(){
+    data() {
         return {
-            doctor:{},
             active:false,
-            roomMsg:false
+            doctor:{},
+            id: this.$router.currentRoute.params['id']
         }
     },
-    methods:{
+    methods: {
         add(){
-            axios.get('http://localhost:3000/doctors?room='+this.doctor.room).then(response => {
-                    if (response.data.lenght>0){
-                        this.roomMsg = true
-                    }else {
-                        axios.post('http://localhost:3000/doctors',this.doctor)
-            .then(response=>{
-                console.log(response.data)
+            axios.put('http://localhost:3000/doctors/'+this.id,this.doctor).then(response=>{
                 this.active = true
                 this.doctor = {}
                 setTimeout(()=>{
                 this.active = false
-            },4000)
+                if(response.status == 200){
+                    this.$router.push('/view/'+this.id)
+                }
+            },5000)
             })
-
-                    }
-            })
-
         }
+    },
+    created(){
+        axios.get('http://localhost:3000/doctors/'+this.id).then(response=>{this.doctor = response.data})
     }
 }
 </script>
 
 <style>
 
-
-    
 </style>
