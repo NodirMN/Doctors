@@ -72,7 +72,7 @@ export default {
         }
     },
     created(){
-        axios.get('http://localhost:3000/doctors/'+this.id).then(response=>{this.doctor = response.data})
+        axios.get('http://localhost:3000/doctors/'+this.id).then(response => {this.doctor = response.data})
     }
 }
 </script>
