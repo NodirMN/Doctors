@@ -1,50 +1,41 @@
 <template>
     <div>
-            <h1>New Doctor</h1>
-    <div  class="info__box" v-show='active'>Ma'lumot qo'shildi</div>
-    <div class="row">
-        <div class="col-4">
-            <label >Ism sharif</label>
-            <input type="text" v-model='doctor.name'>
-        </div>
-        <div class="col-4">
-            <label >Tug'ilgan sana</label>
-            <input type="date" v-model='doctor.data'>
-        </div>
-        <div class="col-4">
-            <label >Tug'ilgan joy</label>
-            <input type="text" v-model='doctor.place'>
-        </div>
-        <div class="col-4">
-            <label >Mutaxassisligi</label>
-                <select v-model="doctor.spec">
-                        <option value="Nevrolog">Nevrolog</option>
-                        <option value="Xirurg">Xirurg</option>
-                        <option value="Terapeft">Terapeft</option>
+        <h1>Yangi shifokor</h1>
+        <div class="info__box" v-show='active'>Ma'lumot yangilandi</div>
+        <div class="row">
+            <div class="col-4">
+                <label>Ism sharif</label><input type="text" v-model='doctor.name'>
+            </div>
+            <div class="col-4">
+                <label>Tugilgan sana</label><input type="date" v-model='doctor.date'>
+            </div>
+            <div class="col-4">
+                <label>Tugilgan joy</label><input type="text" v-model='doctor.place'>
+            </div>
+            <div class="col-4">
+                <label>Mutaxassisligi</label>
+                <select v-model='doctor.spec'>
+                    <option value="Nevrolog">Nevrolog</option>
+                    <option value="Xirurg">Xirurg</option>
+                    <option value="Terapev">Terapev</option>
                 </select>
-    </div>
-        <div class="col-4">
-            <label >Grafik vaqtiy</label>
-            <input type="time" v-model='doctor.time'>
+            </div>
+            <div class="col-4"><label>Grafik vaqti</label><input type="time" v-model='doctor.time'></div>
+            <div class="col-4"><label>Xona raqami</label><input type="number" v-model='doctor.room'></div>
+            <div class="col-4">
+                <label>Rasm url</label>
+                <input type="url" v-model='doctor.img'>
+            </div>
+            <div class="col-12">
+                <vue-editor v-model="doctor.text"></vue-editor>
+            </div>
         </div>
-        <div class="col-4">
-            <label >Xona raqami</label>
-            <input type="number" v-model='doctor.room'>
-        </div>
-        <div class="col-4">
-            <label>Rasm url</label>
-            <input type="url" v-model='doctor.img'>
-        </div>
-        <div class="col-12">
-            <vue-editor v-model='doctor.text'> </vue-editor>
-        </div>
-        </div>
-        <button class="add" @click='add()'>Change</button>
+        <button @click='save()' class="btn">Saqlash</button>
     </div>
 </template>
 
 <script>
-import { VueEditor } from "vue2-editor";
+import { VueEditor } from "vue2-editor"; //npm install vue2-editor
 import axios from 'axios'
 export default {
     components: {
@@ -52,22 +43,21 @@ export default {
     },
     data() {
         return {
-            active:false,
             doctor:{},
+            active:false,
             id: this.$router.currentRoute.params['id']
         }
     },
     methods: {
-        add(){
-            axios.put('http://localhost:3000/doctors/'+this.id,this.doctor).then(response=>{
-                this.active = true
-                this.doctor = {}
+        save(){
+            axios.put('http://localhost:3000/doctors/'+this.id,this.doctor).then(response => {
+                this.active = true 
                 setTimeout(()=>{
-                this.active = false
-                if(response.status == 200){
-                    this.$router.push('/view/'+this.id)
-                }
-            },5000)
+                    this.active = false
+                    if (response.status == 200){
+                        this.$router.push('/view/'+this.id)
+                    }
+                },5000)
             })
         }
     },

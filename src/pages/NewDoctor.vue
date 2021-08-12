@@ -15,9 +15,7 @@
             <div class="col-4">
                 <label>Mutaxassisligi</label>
                 <select v-model='doctor.spec'>
-                    <option value="Nevrolog">Nevrolog</option>
-                    <option value="Xirurg">Xirurg</option>
-                    <option value="Terapev">Terapev</option>
+                    <option v-for='spec of specs' :key='spec.id' :value="spec.id">{{spec.title}}</option>
                 </select>
             </div>
             <div class="col-4"><label>Grafik vaqti</label><input type="time" v-model='doctor.time'></div>
@@ -29,7 +27,7 @@
             <div class="col-4"><label>Rasm url</label><input type="url" v-model='doctor.img'></div>
             <div class="col-12"><vue-editor v-model="doctor.text"></vue-editor></div>
         </div>
-        <button class="push" @click='add()'>Add</button>
+        <button @click='add()'>Qo'shish</button>
     </div>
 </template>
 
@@ -46,6 +44,7 @@ export default {
             doctor:{},
             active:false,
             roomMsg:false,
+            specs:[]
         }
     },
     methods:{
@@ -69,18 +68,13 @@ export default {
 
             
         }
-    }
+    },
+    created() {
+        axios.get('http://localhost:3000/spec').then(response => { this.specs = response.data })
+    },
 }
 </script>
 
 <style>
-.push{
-        background-color: rgb(62, 192, 22);
-        border: 0;
-        color: #e7e7e7;
-        padding: 12px;
-        border-radius: 10px;
-        text-transform: uppercase;
-        cursor: pointer;
-}
+
 </style>

@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h1>All doctor page</h1>
+        <h1>Barcha shifokorlar ro'yhati</h1>
+        <router-link class="btn" to="/newdoctor">Yangi shifokor</router-link>
         <table border='1' width='100%' cellspacing='0' cellpadding='5'>
             <tr>
                 <th>ID</th>
@@ -9,9 +10,9 @@
                 <th></th>
             </tr>
             <tr v-for='(doctor,index) of doctors' :key='index'>
-                <td>{{index.id}}</td>
+                <td>{{index+1}}</td>
                 <td>{{doctor.name}}</td>
-                <td>{{doctor.spec}}</td>
+                <td>{{getSpec(doctor.spec)}}</td>
                 <td>
                     <router-link :to="'/view/'+doctor.id" class="icon-btn">
                         <i class="fas fa-eye"></i>
@@ -32,10 +33,20 @@ import axios from 'axios'
 export default {
     data() {
         return {
-            doctors:[]
+            doctors:[],
+            specs:[]
         }
     },
     methods: {
+        getSpec(id){  // 1
+            let title = ''
+            this.specs.find(spec => {
+                if (spec.id == id){
+                    title = spec.title 
+                }
+            })
+            return title 
+        },
         del(index){
             if (confirm('Qaroringiz aniqmi?')){
                 axios.delete('http://localhost:3000/doctors/'+this.doctors[index].id).then(response => { 
@@ -47,6 +58,7 @@ export default {
     },
     created(){
         axios.get('http://localhost:3000/doctors').then(response => { this.doctors = response.data})
+        axios.get('http://localhost:3000/spec').then(response => { this.specs = response.data })
     }
 }
 </script>

@@ -1,4 +1,4 @@
-# doc
+# bootapp
 
 ## Project setup
 ```
